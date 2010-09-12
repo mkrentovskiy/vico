@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>ViCo</title>
+	
+	<link href="css/reset.css" rel="stylesheet" type="text/css" media="screen"/>
+	<link href="css/formcheck.css" rel="stylesheet" type="text/css" media="screen"/>
+	<link href="css/core.css" rel="stylesheet" type="text/css" media="screen"/>
+
+	<script src="js/jquery.js" type="text/javascript"></script>
+	<script src="js/jquery.cookie.js" type="text/javascript"></script>
+	<script src="js/jquery.json.js" type="text/javascript"></script>
+	<script src="js/jquery.nano.js" type="text/javascript"></script>
+	<script src="js/jquery.trapkey.js" type="text/javascript"></script>
+	<script src="js/jquery.formcheck.js" type="text/javascript"></script>
+	<script src="js/jquery.aevents.js" type="text/javascript"></script>
+	
+	<script src="js/vico.control.js" type="text/javascript"></script>
+</head>
+<body>
+	<div class="maincontrol">
+		<div class="clearfix">
+			<div class="lf">
+				<h1>Users list</h1>
+				<ul id="userslist">
+				</ul>
+				<div id="result">
+				</div>
+			</div>
+			<div class="rf">
+				<div class="secret">
+					<h2>Secret word</h2>
+					<form onsubmit="return false;" id="secret_form">
+						<input type="password" id="i_secret" size="32" 
+								maxlength="255" vmethod="pattern" vparam="string"/>
+					</form>									
+				</div>
+				<div class="adduser">
+					<h2>Add user</h2>
+					<form onsubmit="return false;" id="add_user_form">
+						<div class="fi">
+							<label for="i_login">Login</label><br/>
+							<input type="text" id="i_login" name="login" size="16" 
+								maxlength="32" vmethod="pattern" vparam="string"/>
+						</div>		
+						<div class="fi">
+							<label for="i_password">Password</label><br/>
+							<input type="text" id="i_password" name="password" size="16" 
+								maxlength="32" vmethod="pattern" vparam="string"/>
+						</div>		
+						<div class="fi">
+							<label for="i_title">Name</label><br/>
+							<input type="text" id="i_title" name="title" size="32" 
+								maxlength="256" vmethod="pattern" vparam="string"/>
+						</div>		
+						<div class="fi">
+							<label for="i_group">Group</label><br/>
+							<select id="i_group" name="group" size="1">
+								<option value="other">odinary</option>
+								<option value="lead">priority</option>
+							</select>
+						</div>										
+						<div class="fi">
+							<input type="button" class="button" value="Добавить" onclick="$.vico.addUser();"/>
+						</div>
+					</form>														
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="overlay" class="overlay no"></div>	
+	<div id="emsg" class="emsg no"></div>	
+	<div class="no">
+		<div id="_user_pattern">
+			<li>
+				<div class="delete_user" onclick="$.vico.deleteUser('{login}');">Delete</div>
+				<div class="user_name">{title}</div>
+				<div class="user_login">{login} [{group}]</div>
+			</li>
+		</div>
+	</div>
+</body>
+</html>

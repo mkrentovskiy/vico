@@ -1,0 +1,76 @@
+/*
+	FormCheck for jQuery
+	(c) ReLabs, 2008
+	http://relabs.ru/
+*/ 
+
+input, textarea {
+	width: 50% !impotant;
+	height: 22px !impotant;
+	font-size: 18px;
+	padding: 2px 26px 2px 6px;
+	border: solid #ccc 1px;
+	background: #fff;
+	color: #333;
+	}
+
+input[type=radio], input[type=checkbox] {
+	width: 0% !impotant;
+	height: 0% !impotant;
+	border: 0px;
+	background: #fff;
+	color: #333;
+	}
+
+select {
+	width: 50%;
+	height: 22px !impotant;
+	font-size: 18px;
+	padding: 2px 26px 2px 6px;
+	border: solid #ccc 1px;
+	background: #fff;
+	color: #333;
+	}	
+textarea {
+	font-size: 16px;
+	padding: 2px 26px 2px 6px;
+	border: solid #ccc 1px;
+	background: #fff;
+	color: #333;
+	}
+
+.vchecking {
+	background: #ddd url('../i/formcheck/ajax-loader.gif') no-repeat right center;
+	border: solid #333 1px;
+	}
+.vwrong {
+	background: #fdd url('../i/formcheck/stop.gif') no-repeat right center;
+	border: solid #933 1px;
+	}
+.vright {
+	background: #dfd url('../i/formcheck/accept.gif') no-repeat right center;
+	border: solid #393 1px;
+	}
+
+.vnotice {
+	position: absolute;
+	width: 120px;
+	padding: 6px 16px;
+	color: #f00;
+	font-size: 8pt;
+	cursor: pointer;
+	z-index: 20;
+	background: #fff;
+    filter: Alpha(Opacity='90');
+	-moz-opacity: 0.9;
+	opacity: 0.9;
+	}
+
+input[type=button],input[type=submit], .submit {
+	background: #eee;
+	border: solid #ccc 1px;		
+	padding: 1px 12px;
+	}
+
+
+	

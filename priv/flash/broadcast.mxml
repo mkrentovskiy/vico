@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="absolute" 
+	initialize="init()" 
+	backgroundGradientAlphas="[1.0, 1.0]" 
+	backgroundGradientColors="[#000000, #CCCCCC]">
+	<mx:Script>		
+		<![CDATA[
+			import flash.media.*;
+			import flash.net.*;
+		
+			private var server: String;
+			private var stream: String;
+			private var nc: NetConnection;
+			private var ns: NetStream;			
+
+			private var cam: Camera;
+			private var mic: Microphone;
+			
+			private var isConnected: Boolean;			
+			private var isShow: Boolean;			
+			
+			private function init(): void 
+			{				
+				isShow = false;
+				isConnected = false;
+				
+				server = Application.application.parameters.server;
+				stream = Application.application.parameters.stream;
+
+				connect();
+			}				
+
+			private function initMedia(c:Camera, m:Microphone): void 	
+			{		
+				cam = c;
+				mic = m; 
+				
+	            if (!cam || !mic) {
+    	            trace("No camera/microphone is installed.");
+					startStopButton.enabled = false;
+        	    } else {
+					cam.setMode(352, 288, 25, true);
+					cam.setQuality(0, 100);
+
+					mic.rate = 44;
+					mic.gain = 80;
+					mic.setUseEchoSuppression(true);
+
+					bcVideo.attachCamera(cam);				
+		    	}
+			}
+			
+			private function startStopBroadcast(): void 
+			{
+				if(!isShow) {
+					if(ns) {
+						ns.attachCamera(cam);
+						ns.attachAudio(mic);
+						ns.publish(stream, "live");
+				
+						startStopButton.label = "Stop";
+						startStopButton.setStyle("color", "#0000FF");
+
+						isShow = true; 
+					}	
+				} else {
+					ns.publish();
+					ns.attachCamera(null);
+					ns.attachAudio(null);
+					ns.close();
+	
+					startStopButton.label = "Start";
+					startStopButton.setStyle("color", "#FF0000");
+
+					isShow = false; 
+				};
+			}
+						
+			private function connect(): void
+			{
+				nc = new NetConnection();
+				nc.addEventListener(NetStatusEvent.NET_STATUS, cbNetConnection);
+				nc.connect(server);
+			}
+			
+			public function cbNetConnection(e:NetStatusEvent): void
+			{
+				switch (e.info.code) {
+					case "NetConnection.Connect.Success":
+						isConnected = true;
+						ns = new NetStream(nc);
+						break;
+					
+					case "NetConnection.Connect.Failed":
+						isConnected = false;
+						break;
+				}
+			}
+
+			private function onParamChange(): void
+			{
+				initMedia(			
+					Camera.getCamera(selectedCamera.selectedIndex.toString()),
+					Microphone.getMicrophone(selectedMicrophone.selectedIndex)); 				
+			}
+			
+		]]>
+	</mx:Script>
+	<mx:VBox horizontalAlign="center">
+		<mx:VideoDisplay id="bcVideo" width="352" height="288" creationComplete="initMedia(Camera.getCamera(), Microphone.getMicrophone());"/>
+		<mx:HBox>
+			<mx:Label text="Camera" width="70"/>
+			<mx:ComboBox id="selectedCamera" dataProvider="{Camera.names}" width="250" change="{onParamChange()}"/>
+		</mx:HBox>	
+		<mx:HBox>
+			<mx:Label text="Microphone" width="70"/>
+			<mx:ComboBox id="selectedMicrophone" dataProvider="{Microphone.names}" width="250" change="{onParamChange()}"/>
+		</mx:HBox>	
+		<mx:HBox verticalAlign="center">
+			<mx:Button id="startStopButton" label="Start" click="{startStopBroadcast()}" width="330" color="#FF0000"/>
+		</mx:HBox>		
+	</mx:VBox>
+</mx:Application>
