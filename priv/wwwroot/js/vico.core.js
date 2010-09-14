@@ -194,6 +194,7 @@
 	$.vico.authError = function(p) {
 		$("#login_result").html("Неправильная пара логин-пароль");	
 		$("#loginform").clearForm();
+		$("#loginbutton").removeAttr("disabled");			
 	
 		return true;
 	}
