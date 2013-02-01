@@ -145,12 +145,14 @@
 		]]>
 	</mx:Script>
 	<mx:VBox horizontalAlign="center">
+		<mx:Box id="vi" width="220" height="165"/>
+	</mx:VBox>
+	<mx:VBox horizontalAlign="center">
 		<mx:HBox>
 			<mx:ComboBox id="selectedCamera" dataProvider="{Camera.names}" width="220" change="{onParamChange()}"/>
 		</mx:HBox>	
 		<mx:HBox>
 			<mx:ComboBox id="selectedMicrophone" dataProvider="{Microphone.names}" width="220" change="{onParamChange()}"/>
 		</mx:HBox>	
-		<mx:Box id="vi" width="220" height="165"/>
 	</mx:VBox>
 </mx:Application>
