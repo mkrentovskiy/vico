@@ -4,7 +4,9 @@
 /rel
 /deps
 /libs
+*.swf
 *.swp
 *.dump
+rebar
 .project
 .settings

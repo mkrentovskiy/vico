@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="absolute" 
+	initialize="init()"
+	backgroundColor="0xFFFFFF">
+	<mx:Script>
+		<![CDATA[
+			import org.osmf.layout.HorizontalAlign;
+			import org.osmf.layout.LayoutMetadata;
+			import org.osmf.layout.ScaleMode;
+			import org.osmf.layout.VerticalAlign;
+			import org.osmf.containers.MediaContainer;
+			import org.osmf.media.MediaElement;
+			import org.osmf.media.MediaPlayer;
+			import org.osmf.media.URLResource;
+			import org.osmf.elements.VideoElement;
+			import org.osmf.net.rtmpstreaming.RTMPDynamicStreamingNetLoader;
+			import org.osmf.net.StreamingURLResource;
+ 
+			import mx.core.UIComponent;            
+			import mx.effects.Tween;
+
+			private var e:VideoElement;
+			private var p:MediaPlayer;
+			private var c:MediaContainer;
+			private var l:LayoutMetadata;
+			private var r:URLResource;
+		
+			private function init():void
+			{
+				var vurl:String = this.parameters.server + this.parameters.stream;			
+				var w:Number = parseInt(this.parameters.width);
+				var h:Number = parseInt(this.parameters.height);				
+				var session:String = this.parameters.session;							
+			
+				vi.width = w;
+				vi.height = h;
+				volSlider.x = w - 20;
+				volSlider.height = h;
+			
+				l = new LayoutMetadata();
+				l.scaleMode = ScaleMode.LETTERBOX;
+				l.snapToPixel = true;
+				l.horizontalAlign = HorizontalAlign.CENTER;
+				l.verticalAlign = VerticalAlign.MIDDLE;
+				l.width = w;
+				l.height = h;
+
+				if (session) {
+					r = new StreamingURLResource(vurl, null, NaN, NaN, Vector.<Object>([session]));
+				} else {
+					r = new StreamingURLResource(vurl);
+				};
+
+				e = new VideoElement(r, new RTMPDynamicStreamingNetLoader);
+				e.smoothing = true;
+
+				c = new MediaContainer(null, l); 
+				c.addMediaElement(e); 
+				
+				p = new MediaPlayer(e);
+				vi.addChild(c); 
+			}    
+		]]>
+	</mx:Script>
+	<mx:UIComponent id="vi"/>
+	<mx:VSlider id="volSlider"
+			liveDragging="true"
+			minimum="0.0"
+			maximum="1.0"
+			value="0.8"
+			snapInterval="0.05"
+			change="{p.volume = volSlider.value}" 
+			height="240" />
+</mx:Application>

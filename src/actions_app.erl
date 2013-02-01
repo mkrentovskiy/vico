@@ -9,7 +9,7 @@ start(_Type, _Args) ->
 	Dispatch = [
 		{'_', [
 			{[<<"a">>, '...'], sockjs_cowboy_handler, CtlState},
-			 {['...'], cowboy_http_static, [
+			{['...'], cowboy_http_static, [
                                 {directory, <<"./priv/www">>},
                                 {mimetypes, {fun mimetypes:path_to_mimes/2, default}}
                         ]}

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	layout="absolute" 
+	creationComplete="init()"
+	width="400"
+	height="400"
+	backgroundColor="0xEEEEEE">
+	<mx:Script>		
+		<![CDATA[
+			import mx.core.UIComponent;
+			import flash.events.NetStatusEvent;
+			import flash.media.Camera;
+			import flash.media.Microphone;
+			import flash.media.Video;
+			import flash.net.NetConnection;
+			import flash.net.NetStream;
+
+			public var server: String;
+			public var stream: String;
+			
+			public var nc: NetConnection;
+			public var ns: NetStream;	
+			public var mt: Boolean;		
+
+			public var v: Video;
+			public var vc: UIComponent;
+			public var cam: Camera = null;
+			public var mic: Microphone = null;
+						
+			public function init(): void 
+			{								
+				server = this.parameters.server;
+				stream = this.parameters.stream;
+
+				initMedia(null, null);
+				initVideo();
+				
+				connect();
+			}				
+
+			public function initMedia(c:Camera, m:Microphone): void 	
+			{		
+				if(c != null) {
+					cam = c;
+					initVideo();			 
+				} else { 
+					if(cam == null) cam = Camera.getCamera(); 
+				}; 
+				if(m != null) {
+					mic = m; 
+				} else { 
+					if(mic == null) mic = Microphone.getMicrophone(); 
+				}; 
+
+				cam.addEventListener(StatusEvent.STATUS, cbCamStatus); 
+
+				cam.setMode(352, 288, 24, true);
+				cam.setQuality(10, 100);
+
+				mic.rate = 44;
+				mic.gain = 40;
+				mic.setUseEchoSuppression(true);
+			}
+			
+			public function cbCamStatus(event:StatusEvent):void 
+			{ 
+    			switch (event.code) { 
+        			case "Camera.Muted": 
+						Security.showSettings(SecurityPanel.CAMERA);
+            			trace("User clicked Deny."); 
+            		break; 
+        			case "Camera.Unmuted": 
+            			trace("User clicked Accept."); 
+            		break; 
+    			} 
+			}
+
+			public function initVideo(): void 	
+			{				
+				v = new Video(220, 165);
+				v.smoothing = true;
+
+				vc = new UIComponent();
+   	            vc.addChild(v);
+				vi.addChild(vc);				
+			}
+
+			public function stop(): void 
+			{
+				if(ns) {	
+					ns.publish();
+					ns.attachCamera(null);
+					ns.attachAudio(null);
+					ns.close();
+				}
+			}
+						
+			public function connect(): void
+			{
+				nc = new NetConnection();
+				nc.addEventListener(NetStatusEvent.NET_STATUS, cbNetConnection);
+				nc.connect(server, this.parameters.session, 0);
+			}
+
+			public function record(): void
+			{
+				ns = new NetStream(nc);
+				ns.addEventListener(NetStatusEvent.NET_STATUS, cbNetConnection);
+				
+				if(ns) {
+					v.attachCamera(cam);								
+
+					ns.attachCamera(cam);
+					ns.attachAudio(mic);
+					ns.publish(stream, "live");
+				}
+			}
+			
+			public function cbNetConnection(e:NetStatusEvent): void
+			{
+				switch (e.info.code) {
+					case "NetConnection.Connect.Success":
+					case "NetStream.Play.Failed":
+						record();
+						break;
+					case "NetConnection.Connect.Rejected":
+					case "NetConnection.Connect.Closed":				
+					case "NetConnection.Connect.Failed":						
+						connect();
+						break;					
+				}
+				trace(e.info.code);				
+			}
+
+			public function onParamChange(): void
+			{
+				stop();
+				initMedia(			
+					Camera.getCamera(selectedCamera.selectedIndex.toString()),
+					Microphone.getMicrophone(selectedMicrophone.selectedIndex));
+				connect(); 				
+			}
+			
+		]]>
+	</mx:Script>
+	<mx:VBox horizontalAlign="center">
+		<mx:HBox>
+			<mx:ComboBox id="selectedCamera" dataProvider="{Camera.names}" width="220" change="{onParamChange()}"/>
+		</mx:HBox>	
+		<mx:HBox>
+			<mx:ComboBox id="selectedMicrophone" dataProvider="{Microphone.names}" width="220" change="{onParamChange()}"/>
+		</mx:HBox>	
+		<mx:Box id="vi" width="220" height="165"/>
+	</mx:VBox>
+</mx:Application>
