@@ -1,0 +1,10 @@
+/Mnesia.*
+/ebin
+.DS_Store
+/rel
+/deps
+/libs
+*.swp
+*.dump
+.project
+.settings

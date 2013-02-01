@@ -1,0 +1,13 @@
+{application, actions, [
+	{description, ""},
+	{vsn, "1"},
+	{modules, []},
+	{registered, []},
+	{applications, [
+		kernel,
+		stdlib,
+		cowboy
+	]},
+	{mod, {actions_app, []}},
+	{env, []}
+]}.
