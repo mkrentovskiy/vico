@@ -18,8 +18,9 @@ span.to { color: #ccc; }
 .logged { font-family: 'PT Sans Narrow'; line-height: 40px; font-weight: bold; color: #999; }
 
 .videoctl { background-color: #999; padding: 20px; }
+#broadcast { width: 380px; height: 140px; }
 
-.roaster { background-color: #ccc; padding: 20px; overflow: auto; height: 50px;}
+.roaster { background-color: #ccc; padding: 20px; overflow: auto; height: 140px;}
 .username { font-family: 'PT Sans Narrow'; color: #222; margin: 3px 0; }
 
 .room_video { background-color: #333; padding: 20px; }

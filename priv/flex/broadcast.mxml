@@ -4,8 +4,8 @@
 	layout="absolute" 
 	creationComplete="init()"
 	width="400"
-	height="400"
-	backgroundColor="0xEEEEEE">
+	height="140"
+	backgroundColor="0x999999">
 	<mx:Script>		
 		<![CDATA[
 			import mx.core.UIComponent;
@@ -78,7 +78,7 @@
 
 			public function initVideo(): void 	
 			{				
-				v = new Video(220, 165);
+				v = new Video(172, 130);
 				v.smoothing = true;
 
 				vc = new UIComponent();
@@ -144,15 +144,17 @@
 			
 		]]>
 	</mx:Script>
-	<mx:VBox horizontalAlign="center">
-		<mx:Box id="vi" width="220" height="165"/>
-	</mx:VBox>
-	<mx:VBox horizontalAlign="center">
-		<mx:HBox>
-			<mx:ComboBox id="selectedCamera" dataProvider="{Camera.names}" width="220" change="{onParamChange()}"/>
-		</mx:HBox>	
-		<mx:HBox>
-			<mx:ComboBox id="selectedMicrophone" dataProvider="{Microphone.names}" width="220" change="{onParamChange()}"/>
-		</mx:HBox>	
-	</mx:VBox>
+	<mx:HBox>
+		<mx:Box id="vi" width="172" height="130" backgroundColor="0x000000"/>
+		<mx:VBox width="200" verticalAlign="middle">
+			<mx:Label text="Camera:"/>
+			<mx:HBox>
+				<mx:ComboBox id="selectedCamera" dataProvider="{Camera.names}" width="200" change="{onParamChange()}"/>
+			</mx:HBox>	
+			<mx:Label text="Microphone:"/>
+			<mx:HBox>
+				<mx:ComboBox id="selectedMicrophone" dataProvider="{Microphone.names}" width="200" change="{onParamChange()}"/>
+			</mx:HBox>	
+		</mx:VBox>
+	</mx:HBox>
 </mx:Application>
