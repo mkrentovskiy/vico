@@ -17,9 +17,61 @@
 </head>
 <body>
 	<div class="container">
-		<div class="navbar">
+		<div class="row brick">
+			<div class="span12">
+				<div class="constate">
+					<div id="connecting" class="hide">
+						<i class="icon-refresh icon-white"></i> Connecting to server... 
+					</div>
+					<div id="connected" class="hide">
+						<i class="icon-signal icon-white"></i> We are online. 
+					</div>
+					<div id="disconnect" class="">
+						<i class="icon-remove icon-white"></i> Disconnected. Reload this page.
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		<div class="navbar brick">
   			<div class="navbar-inner">
-    			<a class="brand" href="#">VICO<span class="to">&gt;</span>TV</a>
+    			<a class="brand" href="#">VI<span class="to">&dash;</span>CO<span class="to">&gt;</span>TV</a>
+	  			<div id="login_panel" class="pull-right login">
+	  				<input type="text" class="search-query" placeholder="Nick" rel="tooltip" data-placement="bottom" data-original-title="Enter your nickname here!">
+	  				<button id="login_button" class="btn btn-info btn-mini">Enter</button>
+	  				<img id="login_loading" src='/img/loader.gif' alt="Loading..." width="16" height="16" class="hide"/>
+	  			</div>
+	  			<div id="nick_panel" class="pull-right logged hide">
+	  				%nick%
+	  			</div>
+  			</div>
+  		</div>
+  		<div class="row brick" id="control_box">
+  			<div class="span8">
+  				<div class="videoctl">
+  					<div id="broadcast"></div>
+  				</div>
+  			</div>
+  			<div class="span4">
+  				<div class="roaster">
+  					<div class="username">%another_nick%</div>
+  					<div class="username">%another_nick%</div>
+  					<div class="username">%another_nick%</div>
+  					<div class="username">%another_nick%</div>
+  					<div class="username">%another_nick%</div>
+  				</div>
+  			</div>	
+  		</div>
+  		<div class="row brick">
+  			<div class="span7">
+  				<div class="room_video">
+  					
+  				</div>
+  			</div>
+  			<div class="span5">
+  				<div class="room_chat">
+  					
+  				</div>
   			</div>
   		</div>
 	</div>
