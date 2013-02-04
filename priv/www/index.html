@@ -20,111 +20,65 @@
 		<div class="row brick">
 			<div class="span12">
 				<div class="constate">
-					<div id="connecting" class="hide">
+					<div id="connecting" class="cs hide">
 						<i class="icon-refresh icon-white"></i> Connecting to server... 
 					</div>
-					<div id="connected" class="hide">
+					<div id="connected" class="cs hide">
 						<i class="icon-signal icon-white"></i> We are online. 
 					</div>
-					<div id="disconnect" class="">
-						<i class="icon-remove icon-white"></i> Disconnected. Reload this page.
+					<div id="disconnect" class="cs hide">
+						<i class="icon-remove icon-white"></i> Disconnected. Wait for reconnect.
 					</div>
-					
 				</div>
 			</div>
 		</div>
 		<div class="navbar brick">
-  			<div class="navbar-inner">
-    			<a class="brand" href="#">VI<span class="to">&dash;</span>CO<span class="to">&gt;</span>TV</a>
-	  			<div id="login_panel" class="pull-right login">
-	  				<input type="text" class="search-query" placeholder="Nick" rel="tooltip" data-placement="bottom" data-original-title="Enter your nickname here!">
-	  				<button id="login_button" class="btn btn-info btn-mini">Enter</button>
-	  				<img id="login_loading" src='/img/loader.gif' alt="Loading..." width="16" height="16" class="hide"/>
-	  			</div>
-	  			<div id="nick_panel" class="pull-right logged hide">
-	  				%nick%
-	  			</div>
-  			</div>
-  		</div>
-  		<div class="row brick" id="control_box">
-  			<div class="span8">
-  				<div class="videoctl">
-  					<div id="broadcast"></div>
-  				</div>
-  			</div>
-  			<div class="span4">
-  				<div class="roaster">
-  					<div class="username">%another_nick%</div>
-  					<div class="username">%another_nick%</div>
-  					<div class="username">%another_nick%</div>
-  					<div class="username">%another_nick%</div>
-  					<div class="username">%another_nick%</div>
-  				</div>
-  			</div>	
-  		</div>
-  		<div class="row brick">
-  			<div class="span7">
-  				<div class="room_video clearfix">
-  					<div class="user_video">
-  						<div class="username">%Another_nick%</div>
-  						<div class="video_item"></div>
-  					</div>
-  					<div class="user_video">
-  						<div class="username">%Another_nick%</div>
-  						<div class="video_item"></div>
-  					</div>
-  					<div class="user_video">
-  						<div class="username">%Another_nick%</div>
-  						<div class="video_item"></div>
-  					</div>
-  					<div class="user_video">
-  						<div class="username">%Another_nick%</div>
-  						<div class="video_item"></div>
-  					</div>
-  				</div>
-  			</div>
-  			<div class="span5">
-  				<div class="room_chat">
-  					<div class="chat_panel">
-  						<form onsubmit="">
-  							<input type="text" id="chat_msg" placeholder="Say something..."/>
-  						</form>
-  					</div>
-  					<div class="chat_log">
-  						<div class="li">
-  							<span class="ts">10.25</span>
-  							<span class="username">%username%</span>
-  							<span class="txt">Первое, что делает человек, который дочитал любую книгу по Хаскелю хоты бы до третьей страницы, при изучении других типизированных языков программирования -- это пытается воспроивести классы типов.</span>
-  						</div>
-  						<div class="li">
-  							<span class="ts">10.25</span>
-  							<span class="username">%username%</span>
-  							<span class="txt">Первое, что делает человек, который дочитал любую книгу по Хаскелю хоты бы до третьей страницы, при изучении других типизированных языков программирования -- это пытается воспроивести классы типов.</span>
-  						</div>
-  						<div class="li">
-  							<span class="ts">10.25</span>
-  							<span class="username">%username%</span>
-  							<span class="txt">Первое, что делает человек, который дочитал любую книгу по Хаскелю хоты бы до третьей страницы, при изучении других типизированных языков программирования -- это пытается воспроивести классы типов.</span>
-  						</div>
-  						<div class="li">
-  							<span class="ts">10.25</span>
-  							<span class="username">%username%</span>
-  							<span class="txt">Первое, что делает человек, который дочитал любую книгу по Хаскелю хоты бы до третьей страницы, при изучении других типизированных языков программирования -- это пытается воспроивести классы типов.</span>
-  						</div>
-  						<div class="li">
-  							<span class="ts">10.25</span>
-  							<span class="username">%username%</span>
-  							<span class="txt">Первое, что делает человек, который дочитал любую книгу по Хаскелю хоты бы до третьей страницы, при изучении других типизированных языков программирования -- это пытается воспроивести классы типов.</span>
-  						</div>
-  						<div class="li">
-  							<span class="ts">10.25</span>
-  							<span class="username">%username%</span>
-  							<span class="txt">Первое, что делает человек, который дочитал любую книгу по Хаскелю хоты бы до третьей страницы, при изучении других типизированных языков программирования -- это пытается воспроивести классы типов.</span>
-  						</div>
-  					</div>
-  				</div>
-  			</div>
-  		</div>
+			<div class="navbar-inner">
+				<a class="brand" href="#">VI<span class="to">&dash;</span>CO<span class="to">&gt;</span>TV</a>
+				<div id="login_panel" class="pull-right login">
+					<input type="text" class="search-query" id="nick" placeholder="Nick" rel="tooltip" data-placement="bottom" data-original-title="Enter your nickname here!" />
+					<button id="btn_login" class="btn btn-info btn-mini" onclick="$.app.login();">Enter</button>
+					<img id="l_login" src='/img/loader.gif' alt="Loading..." width="16" height="16" class="hide"/>
+				</div>
+				<div id="nick_panel" class="pull-right logged ctl">
+					%nick%
+				</div>
+			</div>
+		</div>
+		<div class="row brick ctl" id="control_box">
+			<div class="span8">
+				<div class="videoctl clearfix">
+					<div id="broadcast"></div>
+					<div class="ctl_panel">
+						<button id="btn_pub" class="btn btn-success btn-large" onclick="$.app.pub();">Publish</button>
+						<button id="btn_stop" class="btn btn-warning btn-large hide" onclick="$.app.stop();">Stop</button>
+					</div>
+				</div>
+			</div>
+			<div class="span4">
+				<div class="roaster">
+				</div>
+			</div>	
+		</div>
+		<div class="row brick">
+			<div class="span7">
+				<div class="room_video clearfix">
+					<h1>Video</h1>
+				</div>
+			</div>
+			<div class="span5">
+				<div class="room_chat">
+					<div class="chat_panel ctl">
+						<form onsubmit="return $.app.send();">
+							<input type="text" id="chat_msg" placeholder="Say something..."/>
+						</form>
+					</div>
+					<div id="log" class="chat_log">
+						<h1>Chat</h1>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="row brick unbrick">
 			<div class="span12">
 				<div class="constate">
@@ -135,5 +89,23 @@
 			</div>
 		</div>
 	</div>
+  <div class="hide">
+	<div id="_roaster">
+		<div class="username" id="r_{id}">{nick}</div>
+	</div>
+	<div id="_video">
+		<div id="v_{id}" class="user_video">
+			<div class="username">{nick}</div>
+			<div class="video_item" id="vi_{id}"></div>
+		</div>
+	</div>  
+	<div id="_chat">
+		<div class="li">
+			<span class="ts">{tm}</span>
+			<span class="username">{nick}</span>
+			<span class="txt">{msg}</span>
+		</div>
+	</div>
+  </div>
 </body>
 </html>

@@ -3,7 +3,7 @@
 	xmlns:mx="http://www.adobe.com/2006/mxml" 
 	layout="absolute" 
 	initialize="init()"
-	backgroundColor="0xFFFFFF">
+	backgroundColor="0x000000">
 	<mx:Script>
 		<![CDATA[
 			import org.osmf.layout.HorizontalAlign;
@@ -36,7 +36,7 @@
 			
 				vi.width = w;
 				vi.height = h;
-				volSlider.x = w - 20;
+				volSlider.x = 0;
 				volSlider.height = h;
 			
 				l = new LayoutMetadata();

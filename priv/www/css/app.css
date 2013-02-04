@@ -1,5 +1,6 @@
+html { background-color: #444; }
 body { 
-	font-family: 'PT Sans'; background: #444; color: #333;
+	font-family: 'PT Sans'; background-color: #444; color: #333;
 	width: 100%; height: 100%; 
 	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#666666), to(#444444));
   	background-image: -webkit-linear-gradient(top, #666666, #444444);
@@ -8,6 +9,9 @@ body {
   	filter: progid:dximagetransform.microsoft.gradient(startColorstr='#ff666666', endColorstr='#ff444444', GradientType=0);
   	filter: progid:dximagetransform.microsoft.gradient(enabled=false);
 }
+
+h1 { font-family: 'PT Sans Narrow'; font-size: 40px; color: #666; 
+	opacity: 0.1; position: absolute; z-index: 0; }
 
 .constate { font-family: 'PT Sans Narrow'; text-align: center; color: #fff; opacity: 0.6; }
 .constate a, a:link, a:visited, a:hover { color: #fff; }
@@ -20,19 +24,20 @@ span.to { color: #ccc; }
 .logged { font-family: 'PT Sans Narrow'; line-height: 40px; font-weight: bold; color: #999; }
 
 .videoctl { background-color: #999; padding: 20px; }
-#broadcast { width: 380px; height: 140px; }
+#broadcast { width: 380px; height: 140px; float: left; }
+.ctl_panel { float: left; margin: 0 0 0 20px; }
 
 .roaster { background-color: #ccc; padding: 20px; overflow: auto; height: 145px;}
 .username { font-family: 'PT Sans Narrow'; color: #222; margin: 3px 0; }
 
-.room_video { background-color: #333; padding: 20px; }
-.user_video { float: left; padding: 10px; border: dotted #666 1px;}
+.room_video { height: 200px; background-color: #333; padding: 20px; }
+.user_video { float: left; padding: 10px; border: dotted #666 1px; z-index: 10; }
 .user_video .username { color: #aaa; }
 .video_item { width: 200px; height: 150px; background: #000; }
 
 .room_chat { background-color: #f0f0f0; padding: 20px; }
 #chat_msg { width: 320px;}
 .chat_log { height: 200px; overflow-y: auto; }
-.li { margin-bottom: 10px; line-height: 1.2em; }
+.li { margin: 0 10px 10px 0; line-height: 1.2em; z-index: 10; }
 .li .ts { font-size: 10px; color: #999; }
 .li .username { color: #600; cursor: pointer; }
