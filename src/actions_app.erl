@@ -24,6 +24,6 @@ start(_Type, _Args) ->
 stop(_State) ->
 	ok.
 
-events(Con, init, state) -> {ok, state};
-events(Con, {recv, Msg}, state) -> {ok, state};
-events(Con, closed, state) -> {ok, state}.
+events(Con, init, _) -> State = room:connect(Con), {ok, State};
+events(Con, {recv, Msg}, State) -> NewState = room:msg(Con, Msg, State), {ok, NewState};
+events(Con, closed, State) -> NewState = room:close(Con, State), {ok, NewState}.
