@@ -57,6 +57,7 @@
 			</div>
 			<div class="span4">
 				<div id="rl" class="roaster">
+					<h1>Roaster</h1>
 				</div>
 			</div>	
 		</div>
@@ -68,13 +69,13 @@
 			</div>
 			<div class="span5">
 				<div class="room_chat">
+					<h1>Chat</h1>
 					<div class="chat_panel ctl">
 						<form onsubmit="return $.app.send();">
 							<input type="text" id="chat_msg" placeholder="Write something..."/>
 						</form>
 					</div>
 					<div id="log" class="chat_log">
-						<h1>Chat</h1>
 					</div>
 				</div>
 			</div>
@@ -102,7 +103,7 @@
 	<div id="_chat">
 		<div class="li">
 			<span class="ts">{tm}</span>
-			<span class="username">{nick}</span>
+			<span class="username" onclick="$.app.nick(this);">{nick}</span>
 			<span class="txt">{msg}</span>
 		</div>
 	</div>

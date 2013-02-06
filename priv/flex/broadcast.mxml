@@ -55,7 +55,7 @@
 
 				cam.addEventListener(StatusEvent.STATUS, cbCamStatus); 
 
-				cam.setMode(352, 288, 24, true);
+				cam.setMode(640, 480, 24, true);
 				cam.setQuality(10, 100);
 
 				mic.rate = 44;

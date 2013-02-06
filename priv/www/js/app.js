@@ -5,7 +5,7 @@
 	$.app = {}
 	$.app.init = function() {
 		ui_init();
-		sockjs = new SockJS('/a');
+		sockjs = new SockJS('http://' + window.location.hostname + ':8080/a');
 
 		sockjs.onopen = connect;
 		sockjs.onclose = disconnect;
@@ -28,6 +28,11 @@
 		var v = $("#chat_msg").val();
 		if(v && v.length > 0) { $("#chat_msg").val(""); send("C:" + v); };
 		return false; }
+	$.app.nick = function(s) {
+		var v = $("#chat_msg").val();
+		$("#chat_msg").val($(s).text() + ", " + v);
+		$("#chat_msg").focus();
+	}
 
 	/*
 		SockJS ops
@@ -57,7 +62,7 @@
 				case("lger"): { ui_login_revert(); ui_login_error("Please, choose another one."); break; }
 				case("addr"): { p.nick = strip(p.nick); ui_addr(p); break; }
 				case("delr"): { ui_hide(p); ui_delr(p); break; }
-				case("chat"): { p.nick = strip(p.nick); p.msg = strip(p.msg); break; }
+				case("chat"): { p.nick = strip(p.nick); p.msg = strip(p.msg); ui_chat(p); break; }
 				case("show"): { p.nick = strip(p.nick); ui_show(p); break; }
 				case("hide"): { ui_hide(p); break; }	
 			}
@@ -73,20 +78,20 @@
 	function ui_login(n) { $("#nick").attr('disabled', 'disabled'); $("#btn_login").hide(); 
 		$("#l_login").fadeIn('fast'); $.cookie('_nick', n); }
 	function ui_login_revert() { $("#nick").removeAttr('disabled'); $("#btn_login").show('fast'); 	
-		$("#l_login").hide(); $(".ctl").hide();  }
+		$("#l_login").hide(); $(".ctl").hide(); sync();  }
 	function ui_login_ok(p) { $("#nick_panel").html(p.nick); 
 		$("#login_panel").hide(); $(".ctl").slideDown('fast', function() { sync(); embeed_br(p); }); }
 	function ui_pub() { $("#btn_pub").fadeOut('fast', function() { $("#btn_stop").fadeIn('fast'); }); }
 	function ui_stop() { $("#btn_stop").fadeOut('fast', function() { $("#btn_pub").fadeIn('fast'); }); }
 
 	function ui_connect() { cs("connected"); }
-	function ui_disconnect() { cs("disconnect"); $("#broadcast").html(""); $(".ctl").hide(); }
+	function ui_disconnect() { cs("disconnect"); $("#broadcast").html(""); $(".ctl").hide(); sync(); }
 	function ui_reconnect() { cs("connecting"); }
 
-	function ui_addr(m) { $("#rl").prependTo($.nano($("#_roaster").html(), m)); }
+	function ui_addr(m) { $("#rl").append($.nano($("#_roaster").html(), m)); }
 	function ui_delr(m) { $("#r_" + m.id).detach(); $("#v_" + m.id); } 
-	function ui_chat(m) { $("#log").prependTo($.nano($("#_chat").html(), m)); }
-	function ui_show(m) { $("#views").appendTo($.nano($("#_video").html(), m), function() { embeed_v(m); }); }
+	function ui_chat(m) { $("#log").prepend($.nano($("#_chat").html(), m)); }
+	function ui_show(m) { $("#views").append($.nano($("#_video").html(), m)); embeed_v(m); }
 	function ui_hide(m) { $("#v_" + m.id).html(""); $("#v_" + m.id).detach(); }
 		
 
@@ -112,7 +117,7 @@
 			p);
 	}
 	function embeed_v(p) {
-		var oid = "v_" + p.id; 
+		var oid = "vi_" + p.id; 
 		p["width"] = $("#" + oid).width();
 		p["height"] = $("#" + oid).height();
 		swfobject.embedSWF(

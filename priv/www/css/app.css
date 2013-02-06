@@ -11,7 +11,7 @@ body {
 }
 
 h1 { font-family: 'PT Sans Narrow'; font-size: 40px; color: #666; 
-	opacity: 0.1; position: absolute; z-index: 0; }
+	opacity: 0.05; position: absolute; z-index: 0; }
 
 .constate { font-family: 'PT Sans Narrow'; text-align: center; color: #fff; opacity: 0.6; }
 .constate a, a:link, a:visited, a:hover { color: #fff; }
@@ -39,5 +39,5 @@ span.to { color: #ccc; }
 #chat_msg { width: 320px;}
 .chat_log { height: 200px; overflow-y: auto; }
 .li { margin: 0 10px 10px 0; line-height: 1.2em; z-index: 10; }
-.li .ts { font-size: 10px; color: #999; }
+.li .ts { font-size: 10px; color: #ccc; }
 .li .username { color: #600; cursor: pointer; }
