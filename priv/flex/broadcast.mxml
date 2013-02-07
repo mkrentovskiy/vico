@@ -40,7 +40,7 @@
 					case "NetConnection.Connect.Rejected":
 					case "NetConnection.Connect.Closed":				
 					case "NetConnection.Connect.Failed":						
-						connection.connect(streamer);
+						setTimeout(reconnect, 5000);
 						break;					
 				}
 			}
@@ -61,6 +61,12 @@
 				}
 			}
 			
+			private function reconnect():void {
+				connection = new NetConnection();
+				connection.connect(streamer);
+				connection.addEventListener(NetStatusEvent.NET_STATUS, netStatusHander);
+			}
+
 			private function init():void {
 				streamer = FlexGlobals.topLevelApplication.parameters.server;
 				file = FlexGlobals.topLevelApplication.parameters.stream;
