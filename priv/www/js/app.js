@@ -118,13 +118,11 @@
 	}
 	function embeed_v(p) {
 		var oid = "vi_" + p.id; 
-		p["width"] = $("#" + oid).width();
-		p["height"] = $("#" + oid).height();
 		swfobject.embedSWF(
 			"/swf/view.swf?" + d.getTime(), 
 			oid, 
-			p.width, 
-			p.height,
+			$("#" + oid).width(), 
+			$("#" + oid).height(),
 			"11.0.0", 
 			"/swf/expressInstall.swf",
 			p);

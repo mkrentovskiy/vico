@@ -1,76 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Application 
-	xmlns:mx="http://www.adobe.com/2006/mxml" 
-	layout="absolute" 
-	initialize="init()"
-	backgroundColor="0x000000">
-	<mx:Script>
-		<![CDATA[
-			import org.osmf.layout.HorizontalAlign;
-			import org.osmf.layout.LayoutMetadata;
-			import org.osmf.layout.ScaleMode;
-			import org.osmf.layout.VerticalAlign;
-			import org.osmf.containers.MediaContainer;
-			import org.osmf.media.MediaElement;
-			import org.osmf.media.MediaPlayer;
-			import org.osmf.media.URLResource;
-			import org.osmf.elements.VideoElement;
-			import org.osmf.net.rtmpstreaming.RTMPDynamicStreamingNetLoader;
-			import org.osmf.net.StreamingURLResource;
- 
-			import mx.core.UIComponent;            
-			import mx.effects.Tween;
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 minWidth="100" minHeight="100" creationComplete="init()" backgroundColor="0x000000">
 
-			private var e:VideoElement;
-			private var p:MediaPlayer;
-			private var c:MediaContainer;
-			private var l:LayoutMetadata;
-			private var r:URLResource;
+	<fx:Script>
+	<![CDATA[
+		import mx.controls.Alert;
+		import mx.core.FlexGlobals;
 		
-			private function init():void
-			{
-				var vurl:String = this.parameters.server + this.parameters.stream;			
-				var w:Number = parseInt(this.parameters.width);
-				var h:Number = parseInt(this.parameters.height);				
-				var session:String = this.parameters.session;							
-			
-				vi.width = w;
-				vi.height = h;
-				volSlider.x = 0;
-				volSlider.height = h;
-			
-				l = new LayoutMetadata();
-				l.scaleMode = ScaleMode.LETTERBOX;
-				l.snapToPixel = true;
-				l.horizontalAlign = HorizontalAlign.CENTER;
-				l.verticalAlign = VerticalAlign.MIDDLE;
-				l.width = w;
-				l.height = h;
+		private var streamer:String;
+		private var file:String;
 
-				if (session) {
-					r = new StreamingURLResource(vurl, null, NaN, NaN, Vector.<Object>([session]));
-				} else {
-					r = new StreamingURLResource(vurl);
-				};
-
-				e = new VideoElement(r, new RTMPDynamicStreamingNetLoader);
-				e.smoothing = true;
-
-				c = new MediaContainer(null, l); 
-				c.addMediaElement(e); 
-				
-				p = new MediaPlayer(e);
-				vi.addChild(c); 
-			}    
-		]]>
-	</mx:Script>
-	<mx:UIComponent id="vi"/>
+		private function init():void {
+			streamer = FlexGlobals.topLevelApplication.parameters.server;
+			file = FlexGlobals.topLevelApplication.parameters.stream;
+			if(file == null) {
+			  Alert.show('Missing flashvars: stream');
+			  return;
+			}
+			if(streamer == null) {
+			  Alert.show('Missing flashvars: server');
+			  return;
+			}
+			vd.source = streamer + "/" + file;
+			vd.play();
+		}
+	]]>
+	</fx:Script>
+	
+	<mx:VideoDisplay width="100%" height="100%" id="vd" autoPlay="false"></mx:VideoDisplay>
 	<mx:VSlider id="volSlider"
 			liveDragging="true"
 			minimum="0.0"
 			maximum="1.0"
 			value="0.8"
-			snapInterval="0.05"
-			change="{p.volume = volSlider.value}" 
-			height="240" />
-</mx:Application>
+			snapInterval="0.1"
+			change="{vd.volume = volSlider.value}" 
+			height="100" />
+</s:Application>
