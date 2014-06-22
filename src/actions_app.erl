@@ -5,20 +5,25 @@
 -export([stop/1]).
 
 start(_Type, _Args) ->
-	CtlState = sockjs_handler:init_state(<<"/a">>, fun events/3, state, []),
-	Dispatch = [
-		{'_', [
-			{[<<"a">>, '...'], sockjs_cowboy_handler, CtlState},
-			{['...'], cowboy_http_static, [
-                                {directory, <<"./priv/www">>},
-                                {mimetypes, {fun mimetypes:path_to_mimes/2, default}}
-                        ]}
-		]}
-	],
-	cowboy:start_listener(ecs_http_listener, 100,
-		cowboy_tcp_transport, [{port, 8080}],
-		cowboy_http_protocol, [{dispatch, Dispatch}]
-	),
+	Events = sockjs_handler:init_state(<<"/a">>, fun events/3, state, [{response_limit, 1024}]),
+	VRoutes = [
+		{"/", cowboy_static, [
+				{directory,  <<"/opt/vico/priv/www">>},
+				{file, <<"index.html">>},
+				{mimetypes, {fun mimetypes:path_to_mimes/2, default}} 
+			]},
+		{<<"/a/[...]">>, sockjs_cowboy_handler, Events},
+		{<<"/[...]">>, cowboy_static, [
+				{directory,  <<"/opt/vico/priv/www">>},
+				{mimetypes, {fun mimetypes:path_to_mimes/2, default}} 
+			]},
+		{'_', notfound_handler, []}],
+	Routes = [{'_',  VRoutes}], 
+	Dispatch = cowboy_router:compile(Routes),
+	cowboy:start_http(webapp_http_listener, 5, 
+			[{port, 8080}],
+			[{env, [{dispatch, Dispatch}]}
+		]),
 	actions_sup:start_link().
 
 stop(_State) ->
